@@ -1,0 +1,2 @@
+D:/PROJECTS/Xavinex/SCANNER/flutter_ui/android/app/.cxx/Debug/2q2m5e5u/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/PROJECTS/Xavinex/SCANNER/flutter_ui/android/app/.cxx/Debug/2q2m5e5u/armeabi-v7a/CMakeFiles/rebuild_cache.dir
