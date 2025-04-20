@@ -1,13 +1,29 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_ui/headers.dart';
 
 class MyFirebase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Future<void> logout() async {
+    await _auth.signOut();
+  }
 
   User? get currentUser => _auth.currentUser;
+  Future<MyUser?> autoLogin() async {
+    try {
+      if (currentUser != null) {
+        final myUser = await getUser(currentUser!.uid);
+        return myUser;
+      }
+
+      return null;
+    } catch (e) {
+      debugPrint("ERROR on AUTO LOGIN $e");
+      return null;
+    }
+  }
+
   // Register User
-  Future<User?> registerUser({
+  Future<MyUser> registerUser({
     required String email,
     required String password,
     required String name,
@@ -27,9 +43,16 @@ class MyFirebase {
           'age': age,
           'email': email,
         });
-      }
 
-      return user;
+        return MyUser(
+          email: email,
+          age: age,
+          uid: user.uid,
+          questionaries: null,
+          results: [],
+        );
+      }
+      throw Error();
     } catch (e) {
       if (e is FirebaseAuthException) {
         if (e.code == 'email-already-in-use') {
@@ -41,13 +64,30 @@ class MyFirebase {
   }
 
   // Login User
-  Future<User?> loginUser(String email, String password) async {
+  Future<MyUser> loginUser(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return userCredential.user;
+
+      final myUser = await getUser(userCredential.user!.uid);
+      if (myUser == null) {
+        await _firestore.collection('users').doc(userCredential.user!.uid).set({
+          'name': 'Unkown',
+          'age': 99,
+          'email': email,
+        });
+
+        return MyUser(
+          email: email,
+          age: 99,
+          uid: userCredential.user!.uid,
+          questionaries: null,
+          results: [],
+        );
+      }
+      return myUser;
     } catch (e) {
       if (e is FirebaseAuthException) {
         if (e.code == 'invalid-credential') {
@@ -68,9 +108,11 @@ class MyFirebase {
   }
 
   // Get User
-  Future<Map<String, dynamic>?> getUser(String uid) async {
+  Future<MyUser?> getUser(String uid) async {
     DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
-    return doc.exists ? doc.data() as Map<String, dynamic> : null;
+    final res = doc.exists ? doc.data() as Map<String, dynamic> : null;
+    if (res == null) return null;
+    return MyUser.fromFirebaseDoc(doc);
   }
 
   // Update User

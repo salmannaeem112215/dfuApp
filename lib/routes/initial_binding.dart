@@ -1,5 +1,4 @@
-import 'package:flutter_ui/controller/app_controller.dart';
-import 'package:get/get.dart';
+import 'package:flutter_ui/headers.dart';
 
 class InitialBinding extends Bindings {
   @override

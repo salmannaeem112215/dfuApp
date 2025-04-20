@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/my_firebas.dart';
-import 'package:flutter_ui/utility/snacbar.dart';
-import 'questionnaire_page.dart';
+import 'package:flutter_ui/headers.dart';
+import 'package:flutter_ui/routes/app_routes.dart';
+import 'package:flutter_ui/utility/my_firebase.dart';
+import 'package:flutter_ui/utility/snackbar.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/route_manager.dart';
+import '../unused_screen/questionnaire_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -25,7 +29,11 @@ class _LoginPageState extends State<LoginPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            if (Get.previousRoute == AppRoutes.rOnboarding) {
+              Get.back();
+            } else {
+              Get.offAndToNamed(AppRoutes.rOnboarding);
+            }
           },
         ),
       ),
@@ -76,11 +84,10 @@ class _LoginPageState extends State<LoginPage> {
 
   _onLogin() async {
     try {
-      final res = await MyFirebase().loginUser(
-        _emailController.text,
-        _passwordController.text,
+      final res = await Get.find<AppController>().login(
+        email: _emailController.text,
+        password: _passwordController.text,
       );
-      print("RES $res");
     } catch (e) {
       final message = e is String ? e : 'Unable To Login';
       MySnackbar.error(message);

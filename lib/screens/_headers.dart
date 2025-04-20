@@ -1,0 +1,10 @@
+export './splash_screen.dart';
+export './login_page.dart';
+export './registration_page.dart';
+export './onboarding.dart';
+export '../unused_screen/questionnaire_page.dart';
+export '../unused_screen/medical_advice.dart';
+export '../unused_screen/image_selection_page.dart';
+export '../unused_screen/contact_doctors.dart';
+export '../unused_screen/result_diagnosis_of_abnormal_foot.dart';
+export '../unused_screen/result_diagnosis_of_normal_foot.dart';

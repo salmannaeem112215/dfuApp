@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/unused_screen/questionnaire_page.dart';
 import 'login_page.dart';
 
 class TermsPage extends StatefulWidget {
@@ -85,7 +86,7 @@ class _TermsPageState extends State<TermsPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginPage(),
+                              builder: (context) => QuestionnairePage(),
                             ),
                           );
                         }
@@ -107,4 +108,3 @@ class _TermsPageState extends State<TermsPage> {
     );
   }
 }
-

@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/constant.dart';
-import 'package:flutter_ui/screens/result_diagnosis_of_abnormal_foot.dart';
+import 'package:flutter_ui/unused_screen/result_diagnosis_of_abnormal_foot.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_ui/screens/result_diagnosis_of_normal_foot.dart';
+import 'package:flutter_ui/unused_screen/result_diagnosis_of_normal_foot.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';

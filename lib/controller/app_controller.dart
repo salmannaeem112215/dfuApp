@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_ui/my_firebas.dart';
-import 'package:flutter_ui/routes/app_routes.dart';
-import 'package:get/get.dart';
-import 'package:path/path.dart';
+import 'package:flutter_ui/headers.dart';
 
 class AppController extends GetxController {
   final firebase = MyFirebase();
+
+  MyUser? myUser;
   // Splash Screen
   Future<void> onInitialize() async {
     // Check is Login
@@ -17,7 +14,7 @@ class AppController extends GetxController {
       final user = await firebase.getUser(firebase.currentUser!.uid);
       if (user != null) {
         // Home
-        Get.offAndToNamed(AppRoutes.rOnboarding);
+        Get.offAndToNamed(AppRoutes.rHome);
       } else {
         // Onboarding;
         Get.offAndToNamed(AppRoutes.rOnboarding);
@@ -27,14 +24,40 @@ class AppController extends GetxController {
     // C
   }
 
+  Future<void> logout() async {
+    try {
+      await firebase.logout();
+      myUser = null;
+      Get.offAndToNamed(AppRoutes.rLogin);
+    } catch (e) {
+      debugPrint("Error $e");
+      MySnackbar.error('Unable To Logout');
+    }
+  }
+
   // Auth
   Future<void> login({
     required String email,
     required String password,
-  }) async {}
+  }) async {
+    final res = await firebase.loginUser(email, password);
+    myUser = res;
+    Get.toNamed(AppRoutes.rHome);
+  }
+
   Future<void> register({
     required String email,
     required String password,
-  }) async {}
-  Future<void> logout() async {}
+    required String name,
+    required int age,
+  }) async {
+    final res = await firebase.registerUser(
+      email: email,
+      password: password,
+      name: name,
+      age: age,
+    );
+    myUser = res;
+    Get.toNamed(AppRoutes.rTermsAndConditions);
+  }
 }

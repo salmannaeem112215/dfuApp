@@ -20,7 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _onInit() async {
     await controller.onInitialize();
-    print('HI');
   }
 
   @override

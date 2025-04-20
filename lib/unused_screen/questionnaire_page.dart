@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/screens/image_selection_page.dart';
+import 'package:flutter_ui/unused_screen/image_selection_page.dart';
 import 'result_diagnosis_of_normal_foot.dart';
 import 'camera_page.dart';
 

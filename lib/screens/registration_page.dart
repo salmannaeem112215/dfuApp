@@ -1,17 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_ui/my_firebas.dart';
-import 'package:flutter_ui/utility/snacbar.dart';
-import 'package:get/route_manager.dart';
-import 'terms_page.dart';
+import 'package:flutter_ui/headers.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  _RegistrationPageState createState() => _RegistrationPageState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -97,14 +93,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _onRegistration() async {
     try {
-      final res = await MyFirebase().registerUser(
+      await Get.find<AppController>().register(
         email: _emailController.text,
         password: _passwordController.text,
         name: _nameController.text,
         age: int.parse(_ageController.text),
       );
-
-      print("USER $res");
     } catch (e) {
       String? errMessage;
       if (e is String) {

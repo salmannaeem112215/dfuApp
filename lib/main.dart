@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_ui/routes/app_routes.dart';
-import 'package:flutter_ui/routes/initial_binding.dart';
-import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'screens/first_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
+import 'package:flutter_ui/headers.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -39,7 +35,19 @@ class FlutterUiApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color(0xFF4A90E2),
-        scaffoldBackgroundColor: Color(0xFFEFF3F6),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+            centerTitle: true,
+            elevation: 10,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            backgroundColor: Color(0xFF33657D),
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            )),
         textTheme: TextTheme(
           bodyLarge: TextStyle(
               fontSize: 18, color: Colors.black87, fontWeight: FontWeight.w500),
@@ -48,7 +56,7 @@ class FlutterUiApp extends StatelessWidget {
       ),
       initialBinding: InitialBinding(),
       getPages: AppRoutes.pages,
-      initialRoute: '/',
+      initialRoute: AppRoutes.rInitial,
     );
   }
 }
