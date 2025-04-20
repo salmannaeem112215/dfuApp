@@ -2,8 +2,27 @@ import 'package:flutter_ui/headers.dart';
 
 class AppController extends GetxController {
   final firebase = MyFirebase();
+  bool get isEmailVerified => firebase.isEmailVerified;
 
   MyUser? myUser;
+
+  Future<void> reload() async {
+    try {
+      await FirebaseAuth.instance.currentUser?.reload();
+      if (FirebaseAuth.instance.currentUser == null) {
+        Get.offAndToNamed(AppRoutes.rLogin);
+      } else {
+        myUser = await firebase.getUser(firebase.currentUser!.uid);
+        if (myUser == null) {
+          Get.offAndToNamed(AppRoutes.rLogin);
+        }
+      }
+    } catch (e) {
+      debugPrint("Error $e");
+      MySnackbar.error("Unable To Relod");
+    }
+  }
+
   // Splash Screen
   Future<void> onInitialize() async {
     if (firebase.currentUser == null ||
@@ -79,6 +98,16 @@ class AppController extends GetxController {
     } catch (e) {
       debugPrint("ERROR ON UPDATE $e");
       throw 'Unable to Update';
+    }
+  }
+
+  Future<void> sendEmailVerification() async {
+    try {
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      MySnackbar.success('Link send on your email');
+    } catch (e) {
+      debugPrint("ERROR $e");
+      MySnackbar.error('Unable To Send Verification link');
     }
   }
 }

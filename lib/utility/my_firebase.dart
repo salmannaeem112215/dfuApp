@@ -8,6 +8,7 @@ class MyFirebase {
   }
 
   User? get currentUser => _auth.currentUser;
+  bool get isEmailVerified => currentUser?.emailVerified ?? false;
 
   Future<MyUser?> autoLogin() async {
     try {

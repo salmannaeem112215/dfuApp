@@ -1,4 +1,5 @@
 import 'package:flutter_ui/headers.dart';
+import 'package:flutter_ui/screens/home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,12 +10,24 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final controller = Get.find<AppController>();
+
   @override
   Widget build(BuildContext context) {
     final user = controller.myUser!;
+    print("IS EMAIL VEIRIFID ${controller.isEmailVerified}");
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        actions: [
+          AppBarActionBtn(
+            onTap: () async {
+              await controller.reload();
+              setState(() {});
+            },
+            icon: Icons.refresh,
+            text: 'Reload',
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -54,7 +67,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.email),
-                      title: Text('Email'),
+                      title: Row(
+                        children: [
+                          Text('Email'),
+                          Spacer(),
+                          if (!FirebaseAuth.instance.currentUser!.emailVerified)
+                            GestureDetector(
+                              onTap: controller.sendEmailVerification,
+                              child: Text(
+                                'Verify Now',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                       subtitle: Text(user.email),
                     ),
                   ],

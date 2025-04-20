@@ -12,4 +12,15 @@ class MySnackbar {
       ),
     ));
   }
+
+  static success(String message) {
+    Get.showSnackbar(GetSnackBar(
+      title: 'Success',
+      message: message,
+      duration: Duration(
+        seconds: 1,
+        milliseconds: 500,
+      ),
+    ));
+  }
 }
