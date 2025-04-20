@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_ui/routes/app_routes.dart';
+import 'package:flutter_ui/routes/initial_binding.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'screens/first_page.dart';
@@ -44,7 +46,9 @@ class FlutterUiApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16, color: Colors.black54),
         ),
       ),
-      home: FirstPage(),
+      initialBinding: InitialBinding(),
+      getPages: AppRoutes.pages,
+      initialRoute: '/',
     );
   }
 }

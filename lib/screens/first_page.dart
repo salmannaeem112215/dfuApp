@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'registration_page.dart';
 import 'login_page.dart';
 
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
+class OnboardingPage extends StatelessWidget {
+  const OnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,8 @@ class FirstPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: SingleChildScrollView( // حتى يتأقلم مع الشاشات الصغيرة
+          child: SingleChildScrollView(
+            // حتى يتأقلم مع الشاشات الصغيرة
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(

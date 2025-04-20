@@ -82,7 +82,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _validateAndSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
-      _onLogin();
+      _onRegistration();
       // Navigator.push(
       //   context,
       //   MaterialPageRoute(builder: (context) => const TermsPage()),
@@ -95,7 +95,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  void _onLogin() async {
+  void _onRegistration() async {
     try {
       final res = await MyFirebase().registerUser(
         email: _emailController.text,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/my_firebas.dart';
+import 'package:flutter_ui/utility/snacbar.dart';
 import 'questionnaire_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,19 +58,32 @@ class _LoginPageState extends State<LoginPage> {
 
   void _validateAndLogin() {
     if (_formKey.currentState?.validate() ?? false) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login successful!')),
-      );
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => QuestionnairePage()),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Login successful!')),
+      // );
+      _onLogin();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => QuestionnairePage()),
+      // );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Please ensure all fields are filled out correctly')),
       );
+    }
+  }
+
+  _onLogin() async {
+    try {
+      final res = await MyFirebase().loginUser(
+        _emailController.text,
+        _passwordController.text,
+      );
+      print("RES $res");
+    } catch (e) {
+      final message = e is String ? e : 'Unable To Login';
+      MySnackbar.error(message);
     }
   }
 

@@ -5,6 +5,7 @@ class MyFirebase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  User? get currentUser => _auth.currentUser;
   // Register User
   Future<User?> registerUser({
     required String email,
@@ -48,8 +49,12 @@ class MyFirebase {
       );
       return userCredential.user;
     } catch (e) {
-      print('Login Error: $e');
-      return null;
+      if (e is FirebaseAuthException) {
+        if (e.code == 'invalid-credential') {
+          throw 'Invalid Credentials';
+        }
+      }
+      throw 'Unable To Login User';
     }
   }
 
