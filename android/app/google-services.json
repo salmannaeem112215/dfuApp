@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410841982897",
+    "project_id": "dfuapp-d0f4a",
+    "storage_bucket": "dfuapp-d0f4a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410841982897:android:797be2a6edb208ab94ff90",
+        "android_client_info": {
+          "package_name": "com.example.flutter_ui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb5sxiiGzZ-WVABBAbQY8MRjLK5d379eQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

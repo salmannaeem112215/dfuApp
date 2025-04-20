@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/my_firebas.dart';
+import 'package:flutter_ui/utility/snacbar.dart';
+import 'package:get/route_manager.dart';
 import 'terms_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -41,33 +44,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         backgroundColor: const Color(0xFF33657D),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Image.asset('assets/images/logo.png', width: 120),
-              const SizedBox(height: 20),
-              _buildNameField(),
-              const SizedBox(height: 9),
-              _buildAgeField(),
-              const SizedBox(height: 9),
-              _buildEmailField(),
-              const SizedBox(height: 9),
-              _buildPasswordField(),
-              const SizedBox(height: 9),
-              _buildPasswordInstructions(),
-              const SizedBox(height: 9),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF33657D)),
-                onPressed: _validateAndSubmit,
-                child: const Text('Verify',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset('assets/images/logo.png', width: 120),
+                const SizedBox(height: 20),
+                _buildNameField(),
+                const SizedBox(height: 9),
+                _buildAgeField(),
+                const SizedBox(height: 9),
+                _buildEmailField(),
+                const SizedBox(height: 9),
+                _buildPasswordField(),
+                const SizedBox(height: 9),
+                _buildPasswordInstructions(),
+                const SizedBox(height: 9),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF33657D)),
+                  onPressed: _validateAndSubmit,
+                  child: const Text('Verify',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -76,15 +82,37 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _validateAndSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const TermsPage()),
-      );
+      _onLogin();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const TermsPage()),
+      // );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Please ensure all fields are filled out correctly')),
       );
+    }
+  }
+
+  void _onLogin() async {
+    try {
+      final res = await MyFirebase().registerUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text,
+        age: int.parse(_ageController.text),
+      );
+
+      print("USER $res");
+    } catch (e) {
+      String? errMessage;
+      if (e is String) {
+        errMessage = e;
+      } else {
+        errMessage = 'Unable to Register';
+      }
+      MySnackbar.error(errMessage);
     }
   }
 
