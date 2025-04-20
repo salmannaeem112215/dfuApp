@@ -50,9 +50,9 @@ class MyUser {
     Map<String, dynamic> json, {
     String uid = '',
   }) {
-    final results = ((json['results'] as List?) ?? [])
-        .map((e) => MyResults.fromJson(e))
-        .toList();
+    final jsonList = (json['results'] as List?) ?? <Map<String, dynamic>>[];
+    final results = jsonList.map((e) => MyResults.fromJson(e)).toList();
+    print("JHI");
     final questionaries = json['questionaries'] != null
         ? MyQuestionaries.fromJson(json['questionaries'])
         : null;

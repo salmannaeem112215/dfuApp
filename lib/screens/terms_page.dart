@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/headers.dart';
 import 'package:flutter_ui/screens/questionnaire_page.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class TermsPage extends StatefulWidget {
   const TermsPage({super.key});
@@ -23,10 +25,6 @@ class _TermsPageState extends State<TermsPage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF33657D),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -82,12 +80,7 @@ class _TermsPageState extends State<TermsPage> {
                   ),
                   onPressed: _isChecked
                       ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => QuestionnairePage(),
-                            ),
-                          );
+                          Get.offAndToNamed(AppRoutes.rQuestionaires);
                         }
                       : null,
                   child: Text(

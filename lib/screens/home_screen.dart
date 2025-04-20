@@ -95,31 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
       if (streamedResponse.statusCode == 200) {
         final responseBody = await streamedResponse.stream.bytesToString();
         final json = jsonDecode(responseBody);
-        final result = json['result'];
+        _onResults(json);
 
         setState(() {
           isUplaoding = false;
         });
-
-        if (result == 'Abnormal Feet') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ResultDiagnosisOfAbnormalFoot()));
-        } else if (result == 'Normal Feet') {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => ResultDiagnosisOfNormalFoot(
-          //         diabetesDuration: widget.diabetesDuration,
-          //         footCare: widget.footCare,
-          //         hadUlcerBefore: widget.hadUlcerBefore,
-          //         imagePath: _selectedImage!.path,
-          //       ),
-          //     ));
-        } else {
-          showError(context, 'Please Select Foot');
-        }
       } else {
         setState(() {
           isUplaoding = false;
@@ -134,6 +114,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _onResults(Map<String, dynamic> json) {
+    final result = json['result'];
+    final savedPath = json['savedPath'];
+    final res = SimpleResult(result: result, imgUrl: savedPath ?? '');
+    _selectedImage = null;
+    if (result == 'Abnormal Foot') {
+      controller.addResult(res);
+
+      Get.toNamed(AppRoutes.rResultAbnormal, arguments: res);
+    } else if (result == 'Normal Foot') {
+      controller.addResult(res);
+
+      Get.toNamed(AppRoutes.rResultNormal, arguments: res);
+    } else {
+      MySnackbar.error("Please Select Foot");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
             case 0:
               Get.toNamed(AppRoutes.rProfile);
             case 1:
+              Get.toNamed(AppRoutes.rContactDoctor);
+            case 2:
               await controller.logout();
           }
         },
@@ -159,6 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.medical_information),
+            label: 'Doctors',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.logout),

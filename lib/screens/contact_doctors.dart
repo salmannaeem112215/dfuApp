@@ -71,6 +71,7 @@ class ContactDoctorsPage extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -104,32 +105,6 @@ class ContactDoctorsPage extends StatelessWidget {
                   )),
               const SizedBox(height: 24),
               // استخدام Expanded أو Flexible لتحسين التفاعل مع الشاشة الصغيرة
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 50, vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'Back',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

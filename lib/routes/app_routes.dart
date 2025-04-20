@@ -15,6 +15,11 @@ class AppRoutes {
   static const rRegister = '/register';
   static const rQuestionaires = '/questionaries';
 
+  static const rMedicalAdvice = '/medicalAdvice';
+  static const rResultNormal = '/resultNormal';
+  static const rResultAbnormal = '/resultAbnormal';
+  static const rContactDoctor = '/contactDoctor';
+
   static List<GetPage> get pages => [
         GetPage(
           name: rInitial,
@@ -51,6 +56,26 @@ class AppRoutes {
         GetPage(
           name: rReports,
           page: () => ReportsScreen(),
+        ),
+        GetPage(
+          name: rMedicalAdvice,
+          page: () => MedicalAdvice(),
+        ),
+        GetPage(
+          name: rContactDoctor,
+          page: () => ContactDoctorsPage(),
+        ),
+        GetPage(
+          name: rResultNormal,
+          page: () => ResultDiagnosisOfNormalFoot(
+            result: Get.arguments,
+          ),
+        ),
+        GetPage(
+          name: rResultAbnormal,
+          page: () => ResultDiagnosisOfAbnormalFoot(
+            result: Get.arguments,
+          ),
         ),
       ];
 }

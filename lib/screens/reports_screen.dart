@@ -1,4 +1,5 @@
 import 'package:flutter_ui/headers.dart';
+import 'package:flutter_ui/screens/profile.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
@@ -17,11 +18,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
         title: Text("Reports"),
       ),
       body: ListView.builder(
-        itemCount: results.length,
-        itemBuilder: (context, index) => ListTile(
-          title: Text(results[index].result),
-        ),
-      ),
+          itemCount: results.length,
+          itemBuilder: (context, index) => ResultTile(
+                result: results[index],
+              )),
     );
   }
 }

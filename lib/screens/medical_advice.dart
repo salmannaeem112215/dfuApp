@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'contact_doctors.dart';
 
-
 class MedicalAdvice extends StatefulWidget {
   const MedicalAdvice({super.key});
 
@@ -227,13 +226,12 @@ class _MedicalAdviceState extends State<MedicalAdvice> {
                       borderRadius: BorderRadius.circular(12)),
                 ),
                 onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  ContactDoctorsPage()),
-  );
-},
-
-                
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ContactDoctorsPage()),
+                  );
+                },
                 child: const Text(
                   "Get a doctor's number",
                   style: TextStyle(

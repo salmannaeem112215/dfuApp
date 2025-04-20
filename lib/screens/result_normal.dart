@@ -1,20 +1,11 @@
-import 'package:flutter/material.dart';
-import 'result_diagnosis_of_abnormal_foot.dart'; // تأكد من استيراد الصفحة الجديدة هنا
+import 'package:flutter_ui/headers.dart';
 
 class ResultDiagnosisOfNormalFoot extends StatelessWidget {
-  final String diabetesDuration;
-  final String footCare;
-  final String hadUlcerBefore;
-  final String imagePath;
-
   const ResultDiagnosisOfNormalFoot({
-    Key? key,
-    required this.diabetesDuration,
-    required this.footCare,
-    required this.hadUlcerBefore,
-    required this.imagePath,
-  }) : super(key: key);
-
+    super.key,
+    required this.result,
+  });
+  final SimpleResult result;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,19 +16,6 @@ class ResultDiagnosisOfNormalFoot extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF33657D),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ResultDiagnosisOfAbnormalFoot(),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -85,37 +63,46 @@ class ResultDiagnosisOfNormalFoot extends StatelessWidget {
                 child: Column(
                   children: [
                     // Row for the foot images with a small gap between them
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // First image
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/normal_foot1.jpg',
-                            height: 100, // Fixed height for consistency
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        // Second image
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/normal_foot2.jpg',
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        // Third image
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/normal_foot3.jpg',
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
+                    Image.network(
+                      genImgUrl(result.imgUrl),
+                      height: 224,
+                      width: 224,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SizedBox();
+                      },
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     // First image
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/normal_foot1.jpg',
+                    //         height: 100, // Fixed height for consistency
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 2),
+                    //     // Second image
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/normal_foot2.jpg',
+                    //         height: 100,
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 2),
+                    //     // Third image
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/normal_foot3.jpg',
+                    //         height: 100,
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+
                     const SizedBox(height: 16),
 
                     // Final descriptive text in bold
@@ -127,6 +114,29 @@ class ResultDiagnosisOfNormalFoot extends StatelessWidget {
                         color: Colors.black87,
                       ),
                       textAlign: TextAlign.center,
+                    ),
+
+                    const SizedBox(height: 16),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF33657D),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 18),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: Get.back,
+                        child: const Text(
+                          'Continue',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

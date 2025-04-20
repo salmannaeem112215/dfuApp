@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'medical_advice.dart';  
+import 'package:flutter_ui/headers.dart';
 
 class ResultDiagnosisOfAbnormalFoot extends StatelessWidget {
-  const ResultDiagnosisOfAbnormalFoot({super.key});
+  const ResultDiagnosisOfAbnormalFoot({
+    super.key,
+    required this.result,
+  });
+  final SimpleResult result;
 
   @override
   Widget build(BuildContext context) {
@@ -55,34 +58,44 @@ class ResultDiagnosisOfAbnormalFoot extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/abnormal_foot1.jpg',
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/abnormal_foot2.jpg',
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/abnormal_foot3.jpg',
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
+                    // Row for the foot images with a small gap between them
+                    Image.network(
+                      genImgUrl(result.imgUrl),
+                      height: 224,
+                      width: 224,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SizedBox();
+                      },
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/abnormal_foot1.jpg',
+                    //         height: 100,
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 2),
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/abnormal_foot2.jpg',
+                    //         height: 100,
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 2),
+                    //     Expanded(
+                    //       child: Image.asset(
+                    //         'assets/images/abnormal_foot3.jpg',
+                    //         height: 100,
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+
                     const SizedBox(height: 16),
                     const Text(
                       'It is a skin ulcer that appears in the foot area, as a result of the effect of diabetes on the nerves and blood vessels, especially in the lower extremities.',
@@ -112,12 +125,35 @@ class ResultDiagnosisOfAbnormalFoot extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MedicalAdvice(), // الانتقال إلى صفحة MedicalAdvice
+                        builder: (context) =>
+                            const MedicalAdvice(), // الانتقال إلى صفحة MedicalAdvice
                       ),
                     );
                   },
                   child: const Text(
                     'Get medical advice',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF33657D),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: Get.back,
+                  child: const Text(
+                    'Continue',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

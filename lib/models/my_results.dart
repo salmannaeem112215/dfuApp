@@ -27,7 +27,7 @@ class MyResults {
   factory MyResults.fromJson(Map<String, dynamic> json) {
     return MyResults(
       userId: json['userId'] ?? '',
-      dateTime: DateTime.parse(json['dateTime']),
+      dateTime: DateTime.parse(json['dateTime'].toString()),
       imagePath: json['imagePath'] ?? '',
       result: json['result'] ?? '',
     );

@@ -113,10 +113,16 @@ class MyFirebase {
 
   // Get User
   Future<MyUser?> getUser(String uid) async {
-    DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
-    final res = doc.exists ? doc.data() as Map<String, dynamic> : null;
-    if (res == null) return null;
-    return MyUser.fromFirebaseDoc(doc);
+    try {
+      DocumentSnapshot doc =
+          await _firestore.collection('users').doc(uid).get();
+      final res = doc.exists ? doc.data() as Map<String, dynamic> : null;
+      if (res == null) return null;
+      return MyUser.fromFirebaseDoc(doc);
+    } catch (e) {
+      debugPrint("ERROR $e");
+      rethrow;
+    }
   }
 
   // Update User
@@ -134,37 +140,27 @@ class MyFirebase {
   }
 
   // Add Result
-  Future<void> addResult(String userId, String imageUrl, String result) async {
-    await _firestore.collection('results').add({
-      'userId': userId,
-      'imageUrl': imageUrl,
-      'result': result,
-      'timestamp': FieldValue.serverTimestamp(),
+  Future<MyResults> addResult(
+      String userId, String imageUrl, String result) async {
+    final time = DateTime.now().toUtc();
+    await _firestore.collection('users').doc(userId).update({
+      'results': FieldValue.arrayUnion([
+        {
+          'userId': userId,
+          'imageUrl': imageUrl,
+          'result': result,
+          'dateTime': time.toIso8601String(),
+        }
+      ])
     });
+
+    return MyResults(
+      userId: userId,
+      dateTime: time,
+      imagePath: imageUrl,
+      result: result,
+    );
   }
 
   // Get User Results
-  Future<List<Map<String, dynamic>>> getUserResults(String userId) async {
-    QuerySnapshot snapshot = await _firestore
-        .collection('results')
-        .where('userId', isEqualTo: userId)
-        .orderBy('timestamp', descending: true)
-        .get();
-
-    return snapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-  }
-
-  // Get Result
-  Future<Map<String, dynamic>?> getResult(String resultId) async {
-    DocumentSnapshot doc =
-        await _firestore.collection('results').doc(resultId).get();
-    return doc.exists ? doc.data() as Map<String, dynamic> : null;
-  }
-
-  // Delete Result
-  Future<void> deleteResult(String resultId) async {
-    await _firestore.collection('results').doc(resultId).delete();
-  }
 }

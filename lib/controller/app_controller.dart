@@ -1,4 +1,5 @@
 import 'package:flutter_ui/headers.dart';
+import 'package:path/path.dart';
 
 class AppController extends GetxController {
   final firebase = MyFirebase();
@@ -25,11 +26,19 @@ class AppController extends GetxController {
 
   // Splash Screen
   Future<void> onInitialize() async {
-    if (firebase.currentUser == null ||
-        (myUser = await firebase.getUser(firebase.currentUser!.uid)) == null) {
+    try {
+      if (firebase.currentUser == null ||
+          (myUser = await firebase.getUser(firebase.currentUser!.uid)) ==
+              null) {
+        await Future.delayed(Duration(seconds: 1));
+        Get.offAndToNamed(AppRoutes.rOnboarding);
+      } else {
+        await Future.delayed(Duration(seconds: 1));
+
+        _onUserLogedIn(myUser!);
+      }
+    } catch (e) {
       Get.offAndToNamed(AppRoutes.rOnboarding);
-    } else {
-      _onUserLogedIn(myUser!);
     }
 
     // C
@@ -108,6 +117,23 @@ class AppController extends GetxController {
     } catch (e) {
       debugPrint("ERROR $e");
       MySnackbar.error('Unable To Send Verification link');
+    }
+  }
+
+  //////////////
+  // Home
+
+  Future<void> addResult(SimpleResult result) async {
+    try {
+      final res = await firebase.addResult(
+        firebase.currentUser!.uid,
+        result.imgUrl,
+        result.result,
+      );
+      myUser!.results.add(res);
+    } catch (e) {
+      debugPrint("Error $e");
+      MySnackbar.error('Result Not Updated');
     }
   }
 }
