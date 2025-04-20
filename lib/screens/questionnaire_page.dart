@@ -181,13 +181,32 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       );
       return;
     }
+    _onUpdateData();
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => ImageSelectionScreen(
+    //     diabetesDuration: diabetesDuration,
+    //     footCare: footCare,
+    //     hadUlcerBefore: hadUlcerBefore,
+    //   ),
+    // ));
+  }
 
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ImageSelectionScreen(
-        diabetesDuration: diabetesDuration,
-        footCare: footCare,
-        hadUlcerBefore: hadUlcerBefore,
-      ),
-    ));
+  void _onUpdateData() async {
+    try {
+      await Get.find<AppController>().updateQuestionaries(
+        MyQuestionaries(
+          diabetesDuration: diabetesDuration,
+          footCare: footCare,
+          hadUlcerBefore: hadUlcerBefore,
+        ),
+      );
+      if (Get.previousRoute == AppRoutes.rProfile) {
+        Get.back(result: true);
+      } else {
+        Get.offAndToNamed(AppRoutes.rHome);
+      }
+    } catch (e) {
+      MySnackbar.error('Unable To Update');
+    }
   }
 }

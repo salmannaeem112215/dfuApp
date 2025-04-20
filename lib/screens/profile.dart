@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ui/headers.dart';
-import 'package:flutter_ui/screens/home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -74,7 +72,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Spacer(),
                   TextButton(
-                    onPressed: () => Get.toNamed(AppRoutes.rQuestionaires),
+                    onPressed: () async {
+                      final res = await Get.toNamed(AppRoutes.rQuestionaires);
+                      if (res == true) {
+                        Future.delayed(Duration(milliseconds: 100));
+                        setState(() {
+                          print("UPDATE CALLED");
+                        });
+                      }
+                    },
                     child: Text("Update Content"),
                   )
                 ],

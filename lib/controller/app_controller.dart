@@ -66,4 +66,19 @@ class AppController extends GetxController {
       isRegister: true,
     );
   }
+
+  // Questionaries
+  Future<void> updateQuestionaries(MyQuestionaries questionaries) async {
+    try {
+      print("MY USER ${myUser!.uid}");
+      await firebase.updateUser(myUser!.uid, {
+        'questionaries': questionaries.toJson(),
+      });
+      myUser =
+          myUser!.copy(questionaries: questionaries, updateQuestionaries: true);
+    } catch (e) {
+      debugPrint("ERROR ON UPDATE $e");
+      throw 'Unable to Update';
+    }
+  }
 }

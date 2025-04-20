@@ -17,6 +17,23 @@ class MyUser {
     required this.questionaries,
   });
 
+  MyUser copy({
+    String? name,
+    int? age,
+    List<MyResults>? results,
+    MyQuestionaries? questionaries,
+    bool updateQuestionaries = false,
+  }) {
+    return MyUser(
+      uid: uid,
+      name: name ?? this.name,
+      email: email,
+      age: age ?? this.age,
+      results: results ?? this.results,
+      questionaries: updateQuestionaries ? questionaries : this.questionaries,
+    );
+  }
+
   // Convert to JSON (excluding results if you store them separately)
   Map<String, dynamic> toJson() {
     return {
