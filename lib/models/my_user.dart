@@ -3,12 +3,14 @@ import 'package:flutter_ui/headers.dart';
 class MyUser {
   final String uid;
   final String email;
+  final String name;
   final int age;
   final List<MyResults> results;
   final MyQuestionaries? questionaries;
 
   const MyUser({
     this.uid = '',
+    required this.name,
     required this.email,
     required this.age,
     required this.results,
@@ -20,6 +22,7 @@ class MyUser {
     return {
       'email': email,
       'age': age,
+      'name': name,
       'results': results.map((e) => e.toJson()).toList(),
       'questionaries': questionaries?.toJson(),
     };
@@ -38,6 +41,7 @@ class MyUser {
         : null;
     return MyUser(
       uid: uid,
+      name: json['name'] ?? '',
       email: json['email'] ?? '',
       age: json['age'] ?? '',
       results: results,

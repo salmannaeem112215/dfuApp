@@ -5,7 +5,7 @@ import 'package:flutter_ui/utility/my_firebase.dart';
 import 'package:flutter_ui/utility/snackbar.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/route_manager.dart';
-import '../unused_screen/questionnaire_page.dart';
+import 'questionnaire_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

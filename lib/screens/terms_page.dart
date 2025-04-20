@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/unused_screen/questionnaire_page.dart';
-import 'login_page.dart';
+import 'package:flutter_ui/screens/questionnaire_page.dart';
 
 class TermsPage extends StatefulWidget {
   const TermsPage({super.key});

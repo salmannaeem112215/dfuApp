@@ -8,6 +8,7 @@ class MyFirebase {
   }
 
   User? get currentUser => _auth.currentUser;
+
   Future<MyUser?> autoLogin() async {
     try {
       if (currentUser != null) {
@@ -47,6 +48,7 @@ class MyFirebase {
         return MyUser(
           email: email,
           age: age,
+          name: name,
           uid: user.uid,
           questionaries: null,
           results: [],
@@ -82,6 +84,7 @@ class MyFirebase {
         return MyUser(
           email: email,
           age: 99,
+          name: 'Unkown',
           uid: userCredential.user!.uid,
           questionaries: null,
           results: [],

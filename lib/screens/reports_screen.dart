@@ -1,20 +1,20 @@
 import 'package:flutter_ui/headers.dart';
 
-class ResultsScreen extends StatefulWidget {
-  const ResultsScreen({super.key});
+class ReportsScreen extends StatefulWidget {
+  const ReportsScreen({super.key});
 
   @override
-  State<ResultsScreen> createState() => _ResultsScreenState();
+  State<ReportsScreen> createState() => _ReportsScreenState();
 }
 
-class _ResultsScreenState extends State<ResultsScreen> {
+class _ReportsScreenState extends State<ReportsScreen> {
   final controller = Get.find<AppController>();
   @override
   Widget build(BuildContext context) {
     final results = controller.myUser!.results;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Resutls"),
+        title: Text("Reports"),
       ),
       body: ListView.builder(
         itemCount: results.length,

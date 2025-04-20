@@ -6,28 +6,31 @@ class AppController extends GetxController {
   MyUser? myUser;
   // Splash Screen
   Future<void> onInitialize() async {
-    // Check is Login
-    if (firebase.currentUser == null) {
+    if (firebase.currentUser == null ||
+        (myUser = await firebase.getUser(firebase.currentUser!.uid)) == null) {
       Get.offAndToNamed(AppRoutes.rOnboarding);
     } else {
-      // try to login it //
-      final user = await firebase.getUser(firebase.currentUser!.uid);
-      if (user != null) {
-        // Home
-        Get.offAndToNamed(AppRoutes.rHome);
-      } else {
-        // Onboarding;
-        Get.offAndToNamed(AppRoutes.rOnboarding);
-      }
+      _onUserLogedIn(myUser!);
     }
 
     // C
+  }
+
+  void _onUserLogedIn(MyUser user, {bool isRegister = false}) {
+    if (isRegister) {
+      Get.offAndToNamed(AppRoutes.rTermsAndConditions);
+    } else if (user.questionaries == null) {
+      Get.offAndToNamed(AppRoutes.rQuestionaires);
+    } else {
+      Get.offAndToNamed(AppRoutes.rHome);
+    }
   }
 
   Future<void> logout() async {
     try {
       await firebase.logout();
       myUser = null;
+
       Get.offAndToNamed(AppRoutes.rLogin);
     } catch (e) {
       debugPrint("Error $e");
@@ -42,7 +45,7 @@ class AppController extends GetxController {
   }) async {
     final res = await firebase.loginUser(email, password);
     myUser = res;
-    Get.toNamed(AppRoutes.rHome);
+    _onUserLogedIn(myUser!);
   }
 
   Future<void> register({
@@ -58,6 +61,9 @@ class AppController extends GetxController {
       age: age,
     );
     myUser = res;
-    Get.toNamed(AppRoutes.rTermsAndConditions);
+    _onUserLogedIn(
+      myUser!,
+      isRegister: true,
+    );
   }
 }

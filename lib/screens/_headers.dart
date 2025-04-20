@@ -2,7 +2,7 @@ export './splash_screen.dart';
 export './login_page.dart';
 export './registration_page.dart';
 export './onboarding.dart';
-export '../unused_screen/questionnaire_page.dart';
+export 'questionnaire_page.dart';
 export '../unused_screen/medical_advice.dart';
 export '../unused_screen/image_selection_page.dart';
 export '../unused_screen/contact_doctors.dart';

@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_ui/unused_screen/image_selection_page.dart';
-import 'result_diagnosis_of_normal_foot.dart';
-import 'camera_page.dart';
+import 'package:flutter_ui/headers.dart';
 
 class QuestionnairePage extends StatefulWidget {
   const QuestionnairePage({super.key});
@@ -25,6 +22,15 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: BackButton(
+          onPressed: () {
+            if (Get.previousRoute == AppRoutes.rProfile) {
+              Get.back();
+            } else {
+              Get.offAndToNamed(AppRoutes.rHome);
+            }
+          },
+        ),
         title:
             const Text('Questionnaire', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF33657D),
